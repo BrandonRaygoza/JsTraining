@@ -1,2 +1,3 @@
 # JsTraining
-JavaScript Training
+JavaScript Training - Integon
+
