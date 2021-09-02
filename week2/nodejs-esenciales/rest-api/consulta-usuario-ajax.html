@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Id: <input type="text" id="input-id"/>
+    Consultar: <button id="buscar">Consultar</button>
+    <div id="show-name"></div>
+    <div id="show-email"></div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>   
+
+    <script>
+        const btnConsulta = document.getElementById("buscar");
+        const inputId= document.getElementById("input-id");
+        const showName = document.getElementById("show-name");
+        const showEmail = document.getElementById("show-email");
+
+        function getInfo(){
+            $( document ).ready(function() {
+            let endpoint = `https://jsonplaceholder.typicode.com/users/${inputId.value}`;
+        
+                $.ajax({
+                    //url: endpoint + "?key=" + apiKey + " &q=" + $( this ).text(),
+                    url: endpoint,
+                    contentType: "application/json",
+                    dataType: 'json',
+                    type:  'get',
+                    success: function(result){  
+                        showName.textContent = "Name: "+result.name;
+                        showEmail.textContent = "Email: "+result.email;
+                        console.log(result.name);
+                        console.log(result.email);
+                    }
+                });
+            }); 
+        }
+
+        btnConsulta.addEventListener("click", getInfo);
+
+        // Usando solo JQUERY
+        // $(document).ready(function(){
+        //     $("#buscar").click(function(){
+        //         let input = $("#input-id").val();
+        //         let endpoint = `https://jsonplaceholder.typicode.com/users/${input}`;
+        
+        //         $.ajax({
+        //             //url: endpoint + "?key=" + apiKey + " &q=" + $( this ).text(),
+        //             url: endpoint,
+        //             contentType: "application/json",
+        //             dataType: 'json',
+        //             type:  'get',
+        //             success: function(result){      
+        //                 $("#show-name").text(result.name);
+        //                 $("#show-email").text(result.email);  
+                                 
+        //                 console.log(result.name);
+        //                 console.log(result.email);
+        //             }
+        //         });
+        //     });
+        //  });
+        
+    </script>
+</body>
+</html>

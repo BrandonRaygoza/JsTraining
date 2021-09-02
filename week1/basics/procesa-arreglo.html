@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let listaNumeros = [20,33,45,12,11,23];
+
+        console.log(`Antes de foreach: ${listaNumeros}`);
+        listaNumeros.forEach((element, index, theArray)=>{
+                (theArray[index] % 2 !== 0) ?  theArray[index] -=5 :  theArray[index] +=5;
+        });
+
+        console.log(`Despues de foreach: ${listaNumeros}`);
+
+        /*NOTAS*/
+        /*Es necesario pasarle no el arreglo mismo y el index a la funcion, pues sin estos parametros al querer modificar los valores, no podra ser reescrito. Si solo le paso el elemento al foreach, es como si fuera solo lectura
+        listaNumeros.forEach((element)=>{
+                if(element % 2 !== 0)
+                    element-=5;
+                else
+                    element +=5;
+        });*/
+
+        /*En este ejemplo, no funciona para arrow functions pues estas funciones no tienen this keyword
+        listaNumeros.forEach((element, index)=>{
+                if(this[index] % 2 !== 0)
+                    this[index]-=5;
+                else
+                    this[index] +=5;
+        }, arr);*/ //OJO, en este caso se le pasaria el arreglo como parametro al foreach.
+    </script>
+</body>
+</html>

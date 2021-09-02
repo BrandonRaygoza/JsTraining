@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Id: <input type="text" id="input-id"/>
+    Consultar: <button id="buscar">Consultar</button>
+    <div id="show-name"></div>
+    <div id="show-email"></div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>   
+
+    <script>
+        const btnConsulta = document.getElementById("buscar");
+        const inputId= document.getElementById("input-id");
+        const showName = document.getElementById("show-name");
+        const showEmail = document.getElementById("show-email");
+
+        function requestData(){
+            fetch(`https://jsonplaceholder.typicode.com/users/${inputId.value}`)
+            .then(response => {
+                if(!response.ok)
+                    throw Error(response.status);
+                return response.json()})
+            .then(json => {
+                console.log(json);
+
+                showName.textContent = json.name;
+                showEmail.textContent = json.email;
+                
+                return 0;
+            }).catch((error) => { console.error('Error:', error); });
+        }
+
+        btnConsulta.addEventListener("click", requestData);
+        
+    </script>
+</body>
+</html>

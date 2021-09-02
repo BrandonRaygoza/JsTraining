@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>To-Do List</title>
+    <link href="https://fonts.googleapis.com/css?family=Architects+Daughter|Bowlby+One+SC" rel="stylesheet">
+    <style>
+        body {
+            background-color:rgb(37, 37, 37);
+            color:aliceblue;
+            padding:2rem;
+            margin:0;
+            font-family: 'Architects Daughter', cursive;
+            font-size: 12px;
+        }
+        h1 {
+            font-family: 'Bowlby One SC', cursive;
+            font-size: 2.8rem;
+            color: cornflowerblue;
+            margin:0;
+        }
+        ol {
+            font-family: 'Architects Daughter', cursive;
+            font-size: 1.6rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>To-Do List</h1>
+    <ol id="myList" class="toDoList">            
+        <li>Wash Laundry</li>
+        <li>Clean Silver</li>
+        <li>Write Letters</li>
+        <li>Purchase Groceries</li>
+        <li>Retrieve Mail</li>
+        <li>Prepare Dinner</li>
+    </ol>
+    <script>
+        const myList = document.getElementById("myList");   // Get reference to element
+        const newLiElement = document.createElement("li");  // create new element <li>
+        const colors = ["red", "blue", "black", "white", "yellow", "orange", "gray"]
+
+        console.log(myList.children.length);        // Initial length
+        newLiElement.textContent = "Download VSC";  // Add text to element
+        newLiElement.style.color = "red";           // set color
+        myList.appendChild(newLiElement);           // append to list
+       
+       
+        //let childrenNodes = myList.childNodes;
+        let childrenNodes = document.querySelectorAll("li");
+        for(let i = 0; i < childrenNodes.length; i++){
+            childrenNodes[i].style.color = colors[i];
+        }
+
+        console.log(myList.children.length);        // new length
+
+    </script>
+</body>
+</html>

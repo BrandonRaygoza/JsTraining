@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Title:      <input type="text" id="input-title"/>
+    Content:    <input type="text" id="input-content"/>
+    <button id="btnSubmit">Submit</button>
+
+    <div class="notes">
+        <h3>Notes: </h3>
+    </div>
+    <script>
+        const notes = document.querySelector(".notes");
+        const olElem = document.createElement("ol");
+        const inputTitle = document.getElementById("input-title");
+        const inputContent = document.getElementById("input-content");
+        const btnSubmit = document.getElementById("btnSubmit");
+
+        // GET
+        notes.appendChild(olElem);
+        getNotes();
+
+        function displayNotes(json){ 
+            while (olElem.firstChild) {                 // Limpia la lista actual  
+                olElem.removeChild(olElem.firstChild);  // (borrara todos los li)
+            }
+           
+            let length = Object.keys(json).length;      // Lo encontre en internet
+
+            for(let i = 0; i<length; i++){
+                let liELem = document.createElement("li");
+                let btnDelete = document.createElement("button");   // Crear nuevo elemento button (que sera el delete)
+                btnDelete.setAttribute("class","btnDelete");        // Todos hacen lo mismo, asi que mejor uso una clase
+                btnDelete.textContent = "Delete";                   // Ponle texto al nuevo boton de borrar
+            
+                liELem.textContent = `Title: ${json[i].title},     content: ${json[i].content}`;
+                liELem.appendChild(btnDelete);                      // El nuevo boton sera hijo del nuevo li
+                olElem.appendChild(liELem);
+            }
+        }
+
+        function getNotes(){
+             // OJO: Tomar en cuenta lo del CORS EN server.js
+            fetch("http://localhost:3000/notes")
+            .then(response => {
+                if(!response.ok)
+                    throw Error(response.status);
+                
+                return response.json();
+            })
+            .then(json => {
+                displayNotes(json);
+                console.log(json);
+            }).catch((error) => { console.error('Error:', error); });
+            
+        }
+       
+        // POST
+        function postNote(){    
+            fetch("http://localhost:3000/notes",{
+                method: "POST",
+                body: JSON.stringify({
+                    title: inputTitle.value,
+                    content: inputContent.value
+                }),
+                headers:{
+                    "Content-type":"application/json"
+                }
+            }).then(response => response.json())
+            .then(json => {
+                console.log(json)
+                getNotes(); // Para que se actualice al momento de agregar
+            });
+        }
+
+        // No elimina de la bd
+        function deleteNote(event){
+            let target = event.target;
+            let li = target.parentNode;    // El papa del boton, es el li 
+            
+            li.remove();
+        }
+
+        btnSubmit.addEventListener("click", postNote);
+        notes.addEventListener("click", deleteNote);
+       
+    </script>
+</body>
+</html>

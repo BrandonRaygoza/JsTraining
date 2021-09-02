@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM</title>
+</head>
+<body>
+    <div id="buttonsGroup">
+        <button id="btn1" class="odd">Button 1</button>
+        <button id="btn2">Button 2</button>
+        <button id="btn3" class="odd">Button 3</button>
+    </div>
+
+
+    <script>
+
+        const buttons = document.getElementsByTagName("button");    //Se trae a todos los botones de tipo button
+        const btn1= document.getElementById("btn1");
+        const group = document.getElementById("buttonsGroup");      // Para agregar elementos dinamicamente, se utilizan grupos
+        const newBtn = document.createElement("button");            // Nuevo elemento button
+        const btnOdds = document.getElementsByClassName("odd");     // Se trae a todos los elementos que tengan el atributo class=odd
+
+        console.log(buttons);
+
+        // Recorrer un grupo de elementos
+        for(btn of buttons){                         // Recorre los botones que existen
+           btn.style.color = "red";
+        }
+
+        for(btn of btnOdds){
+            btn.style.color = "blue";
+        }
+
+        // Responder a un evento
+        btn1.addEventListener("click", function(){
+            alert(`Button 1, pressed`);
+        });
+
+        
+        // Crear un nuevo elemento y setear atributo
+        newBtn.textContent = "Button 4";
+        newBtn.setAttribute("id","btn4");
+        group.appendChild(newBtn);
+
+
+       
+
+    </script>
+</body>
+</html>

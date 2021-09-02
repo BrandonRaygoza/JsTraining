@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Id: <input type="text" id="input-id"/>
+    Consultar: <button id="buscar">Consultar</button>
+    <div id="show-name"></div>
+    <div id="show-email"></div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>   
+
+    <script>
+
+        const btnConsulta = document.getElementById("buscar");
+        const inputId= document.getElementById("input-id");
+        const showName = document.getElementById("show-name");
+        const showEmail = document.getElementById("show-email");
+
+        //var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+        var xhr = new XMLHttpRequest();
+
+        console.log('UNSENT', xhr.readyState); // readyState will be 0
+
+        xhr.onload = function(){
+            console.log('DONE', xhr.readyState);
+            if(xhr.status >= 200 && xhr.status < 300){
+              
+                console.log("The request success!");
+
+                let response = JSON.parse(xhr.responseText);   
+                showName.textContent = "Name: "+response.name;
+                showEmail.textContent = "Email: "+response.email;
+            }else{
+                console.log("The request failed!");
+            }
+
+            console.log("this always runs");
+        }
+
+        function requestData(){
+            xhr.open("GET", `https://jsonplaceholder.typicode.com/users/${inputId.value}`);
+            console.log('OPENED', xhr.readyState); // readyState will be 1
+
+            xhr.send();
+            console.log("Me ejecuto aunque el send siga esperando por una respuesta");
+        }
+        
+
+        btnConsulta.addEventListener("click", requestData);
+    </script>
+</body>
+</html>
